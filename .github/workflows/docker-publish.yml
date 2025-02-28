@@ -38,7 +38,7 @@ jobs:
 
       - name: Build & Push Modpack Docker Images
         run: |
-          for modpack in $(find . -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | tr ' ' '-' | tr '[:upper:]' '[:lower:]'); do
+          for modpack in $(find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" -exec basename {} \; | tr ' ' '-' | tr '[:upper:]' '[:lower:]'); do
             IMAGE_NAME="${{ env.REGISTRY }}/${{ env.REPO_NAME }}:$modpack"
             echo "Building and pushing image for $modpack..."
             docker build -t $IMAGE_NAME $modpack
